@@ -102,6 +102,31 @@ h2{margin:6px 0 0;font-family:var(--serif);font-weight:400;font-size:32px;line-h
 .ok{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:20px 0 6px}
 .ok .ring{width:56px;height:56px;border-radius:999px;background:rgba(215,245,58,.12);border:1px solid rgba(215,245,58,.5);display:flex;align-items:center;justify-content:center}
 @keyframes fade{from{opacity:0}to{opacity:1}}@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
+/* saved page */
+.spage{position:absolute;inset:0;z-index:30;background:var(--bg);overflow-y:auto;padding:28px max(16px,env(safe-area-inset-left,0px)) 24px;animation:fade .2s}
+.sp-head{display:flex;align-items:center;gap:14px}
+.sp-back{flex:none;width:44px;height:44px;border-radius:999px;background:var(--surface);border:none;display:flex;align-items:center;justify-content:center}
+.sp-head .y{font-size:11px;font-weight:500;letter-spacing:.16em;color:var(--ink2)}
+.sp-head h1{margin:0;font-family:var(--serif);font-weight:400;font-size:32px;line-height:36px}
+.tabs{margin-top:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:4px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.1)}
+.tabs button{height:40px;border-radius:999px;border:none;background:transparent;font-size:14px;font-weight:600;color:#fff}
+.tabs button[aria-selected=true]{background:var(--lime);color:var(--bg)}
+.sp-count{margin-top:16px;font-size:13px;color:var(--ink2)}
+.drow{display:flex;gap:12px;padding:10px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.drow img{flex:none;width:92px;height:92px;border-radius:14px;object-fit:cover}
+.drow .c{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:2px}
+.drow .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.drow .nm{font-family:var(--serif);font-size:22px;line-height:24px}
+.drow .un{flex:none;width:32px;height:32px;margin:-4px -4px 0 0;border-radius:999px;background:transparent;border:none;display:flex;align-items:center;justify-content:center}
+.drow .ar{font-size:12px;color:var(--ink2)}.drow .of{margin-top:auto;font-size:12px;color:rgba(255,255,255,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.place{display:block;width:100%;text-align:left;background:none;border:none;padding:0}
+.place img{display:block;width:100%;height:190px;object-fit:cover;border-radius:18px}
+.place .offer{width:fit-content;max-width:100%}
+.place .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.place .nm{font-family:var(--serif);font-size:24px}.place .rt{display:flex;align-items:center;gap:3px;font-size:13px;font-weight:600}
+.place .ar{margin-top:8px;font-size:11px;font-weight:500;letter-spacing:.08em;color:rgba(255,255,255,.6)}
+.place .chip{margin-top:10px;height:28px;width:fit-content;padding:0 10px;border-radius:999px;background:rgba(215,245,58,.12);color:var(--lime);display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700}
+.splist{display:flex;flex-direction:column;gap:22px;margin-top:14px}
 /* event log */
 .tools{display:flex;justify-content:space-between;align-items:center;margin:10px max(16px,env(safe-area-inset-left,0px)) 0;font-size:12px;color:var(--ink3)}
 .tools button{height:32px;padding:0 12px;border-radius:999px;background:transparent;border:1px solid var(--line2);font-size:12px;color:var(--ink2)}
@@ -124,6 +149,7 @@ const DISHES=[
 {id:'pasta',img:IMG.pasta,dish:'Tagliatelle al Burro',restaurant:'Birdies',meta:'· Café · 0.6 km',rating:'4.7',match:'89%',reason:'Trending in Business Bay',price:'AED 74',offer:'20% off · Early bird',plus:true,kind:'purple',signals:['Trending in Business Bay this week','0.6 km from you, a short walk','Early-bird 20% off before 12pm']},
 {id:'sliders',img:IMG.sliders,dish:'Wagyu Sliders',restaurant:'11 Woodfire',meta:'· Steakhouse · 2.1 km',rating:'4.8',match:'87%',reason:'From a place you love',price:'AED 95',offer:'20% off with qlub+',plus:true,kind:'purple',signals:['From a restaurant you already love','Great for sharing with your usual group','20% off with qlub+']}];
 const REASONS=['Not my taste','Too pricey','Too far','Had it recently'];
+const AREA={steak:'Jumeirah',poke:'Dubai Mall',pasta:'Business Bay',sliders:'Jumeirah'};
 const $=s=>document.querySelector(s);
 const I={
  heart:'<svg width="13" height="13" viewBox="0 0 24 24" fill="#FF3B50"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg>',
@@ -139,7 +165,7 @@ const I={
  fork:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>'
 };
 const THRESH=90;
-const S={idx:0,dx:0,dragging:false,saved:[],flipped:false,intro:true,toast:null,lastDir:0,sheet:null,visit:{when:'Tonight',size:2}};
+const S={page:null,idx:0,dx:0,dragging:false,saved:[],flipped:false,intro:true,toast:null,lastDir:0,sheet:null,visit:{when:'Tonight',size:2}};
 let busy=false,startX=0,moved=0,toastT=null,shown=-1,events=[];
 try{if(localStorage.getItem('qlub.coach')==='1')S.intro=false}catch(e){}
 
@@ -199,6 +225,20 @@ function sheetHtml(){
   }
   return `<div class="scrim" data-a="sheet-close"></div><div class="sheet" role="dialog" aria-modal="true"><div class="grip"></div>${inner}</div>`;
 }
+function pageHtml(){
+  const p=S.page;if(!p)return '';
+  const items=S.saved.map(byId),places=[];
+  items.forEach(d=>{let r=places.find(x=>x.name===d.restaurant);if(!r){r={name:d.restaurant,first:d,dishes:[]};places.push(r)}r.dishes.push(d)});
+  const isP=p.tab==='places';
+  let body='';
+  if(!isP){
+    body=items.length?`<div class="sp-count">${items.length} saved ${items.length>1?'dishes':'dish'}</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">${items.map(d=>`<div class="drow"><img src="${d.img}" alt="${d.dish}"><div class="c"><div class="top"><span class="nm">${d.dish}</span><button class="un" type="button" data-a="unsave" data-id="${d.id}" aria-label="Remove ${d.dish} from saved"><svg width="16" height="16" viewBox="0 0 24 24" fill="#FF3B50"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg></button></div><span class="ar">${d.restaurant} · ${AREA[d.id]}</span><span class="of">${d.price} · ${d.offer}</span></div></div>`).join('')}</div>`:'<p class="sub" style="margin-top:20px">No saved dishes yet. Swipe right on a dish to save it.</p>';
+  }else{
+    body=places.length?`<div class="sp-count">${places.length} saved ${places.length>1?'places':'place'}</div><div class="splist">${places.map(r=>{const d=r.first,cu=d.meta.replace(/^· /,'').split(' · ')[0];return `<button class="place" type="button" data-a="venue" data-id="${d.id}" aria-label="${r.name}, open restaurant"><img src="${d.img}" alt=""><div class="row"><span class="nm">${r.name}</span><span class="rt">${I.star}${d.rating}</span></div><div style="margin-top:8px">${offerHtml(d)}</div><div class="ar">${AREA[d.id].toUpperCase()} · ${cu.toUpperCase()}</div><div class="chip">${I.spark(11)}${r.dishes.length} saved ${r.dishes.length>1?'dishes':'dish'}: ${r.dishes.map(x=>x.dish).join(', ')}</div></button>`}).join('')}</div>`:'<p class="sub" style="margin-top:20px">No saved places yet. Restaurants of the dishes you save show up here.</p>';
+  }
+  return `<div class="spage" role="region" aria-label="Your Saved"><div class="sp-head"><button class="sp-back" type="button" data-a="page-back" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button><div><div class="y">YOUR</div><h1>Saved</h1></div></div>
+  <div class="tabs" role="tablist"><button type="button" role="tab" data-a="tab" data-v="dishes" aria-selected="${!isP}">Dishes · ${items.length}</button><button type="button" role="tab" data-a="tab" data-v="places" aria-selected="${isP}">Restaurants · ${places.length}</button></div>${body}</div>`;
+}
 function slotHtml(){
   const prev=DISHES[S.idx-1],empty=S.idx>=DISHES.length;
   if(S.toast==='saved'&&prev)return `<div class="toast" role="status"><img src="${prev.img}" alt=""><span><b style="font-weight:600">${prev.dish}</b> saved to Your Cravings</span><button type="button" data-a="undo">Undo</button></div>`;
@@ -208,6 +248,7 @@ function slotHtml(){
   return '';
 }
 function render(){
+  const oldPage=document.querySelector('.spage'),oldTop=oldPage?oldPage.scrollTop:0;
   const empty=S.idx>=DISHES.length,n=S.saved.length,items=S.saved.map(byId);
   const segs=DISHES.map((d,i)=>`<i class="${i<S.idx?'done':i===S.idx?'cur':''}"></i>`).join('');
   let cards='';
@@ -225,7 +266,8 @@ function render(){
   <p class="sub">Refreshed daily from your visits and saves.</p><div class="segs" aria-label="${empty?'All '+DISHES.length+' reviewed':(S.idx+1)+' of '+DISHES.length}">${segs}</div>
   <div id="deck">${cards}${done}</div>
   ${empty?'':`<div class="controls"><div class="ctl"><button class="rb skip" type="button" data-a="pass" aria-label="Skip dish">${I.x(24,2.4)}</button>Skip</div><div class="ctl"><button class="rb save" type="button" data-a="like" aria-label="Save dish"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg></button>Save</div></div>`}
-  <div id="slot">${slotHtml()}</div>${sheetHtml()}`;
+  <div id="slot">${slotHtml()}</div>${pageHtml()}${sheetHtml()}`;
+  const np=document.querySelector('.spage');if(np&&oldPage&&oldTop)np.scrollTop=oldTop;
   if(!empty&&shown!==S.idx){shown=S.idx;log('impression',{dish:cur().id,position:S.idx+1,match:cur().match})}
 }
 function paintDrag(){
@@ -299,7 +341,10 @@ sec.addEventListener('click',e=>{
   else if(a==='restart'){busy=false;Object.assign(S,{idx:0,dx:0,saved:[],toast:null,flipped:false});shown=-1;clearTimeout(toastT);log('restart',{});render()}
   else if(a==='saved'){S.sheet={type:'saved'};render()}
   else if(a==='venue'){openVenue(b.dataset.id||cur().id)}
-  else if(a==='visit'){S.sheet={type:'visit',name:S.saved.length?'':'Your picks'};render()}
+  else if(a==='visit'){S.sheet=null;S.page={tab:'places'};log('open_saved',{tab:'places',via:'plan_a_visit'});render()}
+  else if(a==='page-back'){S.page=null;render()}
+  else if(a==='tab'){S.page.tab=v;log('saved_tab',{tab:v});render()}
+  else if(a==='unsave'){S.saved=S.saved.filter(id=>id!==b.dataset.id);log('unsave',{dish:b.dataset.id});render()}
   else if(a==='sheet-close')closeSheet();
   else if(a==='when'){S.visit.when=v;render()}
   else if(a==='size'){S.visit.size=Math.max(1,Math.min(12,S.visit.size+ +v));render()}
@@ -307,12 +352,12 @@ sec.addEventListener('click',e=>{
   else if(a==='confirm'){log('plan_visit',{when:S.visit.when,party:S.visit.size,saved:S.saved.slice()});S.sheet.done=true;render()}
 });
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'&&S.sheet){closeSheet();return}
-  if(S.sheet||S.intro||S.idx>=DISHES.length)return;
+  if(e.key==='Escape'){if(S.sheet)closeSheet();else if(S.page){S.page=null;render()}return}
+  if(S.sheet||S.page||S.intro||S.idx>=DISHES.length)return;
   if(e.key==='ArrowRight'){S._via='key';swipe(1)}else if(e.key==='ArrowLeft'){S._via='key';swipe(-1)}
   else if(e.key==='Enter'&&e.target===document.body)openDetails();
 });
 $('#logbtn').onclick=()=>{const L=$('#log');L.hidden=!L.hidden;$('#logbtn').setAttribute('aria-expanded',String(!L.hidden))};
-$('#replay').onclick=()=>{try{localStorage.removeItem('qlub.coach')}catch(e){}busy=false;Object.assign(S,{idx:0,dx:0,saved:[],toast:null,flipped:false,intro:true,sheet:null});shown=-1;render()};
+$('#replay').onclick=()=>{try{localStorage.removeItem('qlub.coach')}catch(e){}busy=false;Object.assign(S,{idx:0,dx:0,saved:[],toast:null,flipped:false,intro:true,sheet:null,page:null});shown=-1;render()};
 render();
 </script>
