@@ -268,7 +268,7 @@
   - `GET /v1/nextbite/saved`
   - `POST /v1/nextbite/onboarding`
 - **Recommendation engine:**
-  1. **Dish catalogue:** menu items with cuisine, dish type, flavour attributes, price and photo status. AI can fill in missing ingredients and attributes from the dish name and description (Menu Brain enrichment).
+  1. **Dish catalogue:** menu items with cuisine, dish type, flavour attributes, price and photo status. AI can fill in missing ingredients and attributes from the dish name and description (Menu Brain enrichment). The full tag list is in [data/dish-tags.md](data/dish-tags.md).
   2. **Clusters:** a nightly job groups logged-in diners into ~6 taste clusters and computes the top dishes per cluster per week.
   3. **Diner profile:** purchase history + onboarding + feedback, with recent signals weighed more (BR2, BR8).
   4. **Scoring:** taste match + price fit + quality (reorder score) + distance + context + promotion boost, then the pick mix (BR4).
