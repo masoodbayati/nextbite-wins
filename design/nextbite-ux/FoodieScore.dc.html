@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your Foodie Score</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#0D0A10}
+a{color:#C9A2FF}a:hover{color:#E2CCFF}
+</style>
+</helmet>
+<div style="width: 390px; height: 2620px; position: relative; overflow: hidden; background: #0D0A10; color: #FFFFFF; font-family: 'Inter', -apple-system, sans-serif; letter-spacing: -0.01em; box-sizing: border-box; padding: 56px 16px 40px 16px">
+
+<!-- Header -->
+<div style="display: flex; align-items: center; gap: 14px">
+<a href="Saved.dc.html" aria-label="Back to saved" style="flex: none; width: 44px; height: 44px; border-radius: 999px; background: #1A1520; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg></a>
+<div style="flex: 1">
+<div style="font-size: 11px; font-weight: 500; letter-spacing: 0.16em; color: rgba(255,255,255,0.68)">YOUR</div>
+<h1 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 32px; line-height: 36px">Foodie Score</h1>
+</div>
+<button type="button" aria-label="How the score works" style="width: 44px; height: 44px; border-radius: 999px; background: #1A1520; border: none; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg></button>
+</div>
+
+<!-- Hero (level) -->
+<div style="margin-top: 20px; padding: 24px 20px 20px 20px; border-radius: 28px; background: #1A1520; border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; text-align: center">
+<div style="position: relative; width: 210px; height: 210px">
+<svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+<defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7D00D4"></stop><stop offset="1" stop-color="#C38BFF"></stop></linearGradient></defs>
+<circle cx="105" cy="105" r="92" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"></circle>
+<circle cx="105" cy="105" r="92" fill="none" stroke="url(#ringGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="491 600" transform="rotate(-90 105 105)"></circle>
+</svg>
+<div style="position: absolute; left: 0; top: 0; width: 210px; height: 210px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 42 13.5v21L24 45 6 34.5v-21Z" fill="#7D00D4" stroke="#7D00D4" stroke-width="4" stroke-linejoin="round"></path><g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5Z"></path></g></svg>
+<span style="font-family: 'Instrument Serif', serif; font-size: 60px; line-height: 60px">640</span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: rgba(255,255,255,0.68)">FOODIE POINTS</span>
+</div>
+</div>
+<div style="margin-top: 12px; height: 30px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,0.08); color: #FFFFFF; display: flex; align-items: center; font-size: 13px; font-weight: 700">Level 2 of 4 · Explorer</div>
+<div style="width: 100%">
+<div style="margin-top: 10px; font-size: 14px; line-height: 20px; color: rgba(255,255,255,0.8)"><b style="color: #FFFFFF; font-weight: 600">60 pts</b> to Foodie. A new cuisine gets you there faster.</div>
+</div>
+</div>
+
+<!-- Level journey -->
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 32px">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 32px">Your Level Journey</h2>
+<span style="font-size: 13px; color: rgba(255,255,255,0.68)">2 of 4 unlocked</span>
+</div>
+<div style="position: relative; margin-top: 16px">
+<div style="position: absolute; left: 45px; right: 45px; top: 33px; height: 2px; background: rgba(255,255,255,0.12)"></div>
+<div style="position: absolute; left: 45px; top: 33px; width: 120px; height: 2px; background: #7D00D4"></div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+<sc-for list="{{levels}}" as="l" hint-placeholder-count="4">
+<button type="button" onClick="{{l.pick}}" aria-label="{{l.name}} level details" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 0 10px 0; border-radius: 18px; background: {{l.tileBg}}; border: 1px solid {{l.tileLine}}; color: #FFFFFF; cursor: pointer; font-family: inherit">
+<div style="position: relative; width: 56px; height: 56px; opacity: {{l.badgeOp}}">
+<svg width="56" height="56" viewBox="0 0 48 48" aria-hidden="true">
+<defs><linearGradient id="{{l.gid}}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{{l.c1}}"></stop><stop offset="1" stop-color="{{l.c2}}"></stop></linearGradient></defs>
+<path d="M24 3 42 13.5v21L24 45 6 34.5v-21Z" fill="url(#{{l.gid}})" stroke="url(#{{l.gid}})" stroke-width="4" stroke-linejoin="round"></path>
+<g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+<sc-if value="{{l.iSpoon}}" hint-placeholder-val="{{ false }}"><ellipse cx="12" cy="7.5" rx="4" ry="5.5"></ellipse><path d="M12 13v9"></path></sc-if>
+<sc-if value="{{l.iFork}}" hint-placeholder-val="{{ false }}"><path d="M6 2v6a3 3 0 0 0 6 0V2M9 2v20M9 11v0"></path><path d="M18 2c-2 1.5-3 4.5-3 8h3v12"></path></sc-if>
+<sc-if value="{{l.iChef}}" hint-placeholder-val="{{ false }}"><path d="M6 13.9A4 4 0 0 1 7.5 6a5 5 0 0 1 9 0 4 4 0 0 1 1.5 7.9V20H6Z"></path><path d="M6 16.5h12"></path></sc-if>
+<sc-if value="{{l.iCompass}}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5Z"></path></sc-if>
+<sc-if value="{{l.iGlass}}" hint-placeholder-val="{{ false }}"><path d="M8 22h8M12 15v7M7 2h10l-.7 6.3a4.3 4.3 0 0 1-8.6 0Z"></path></sc-if>
+<sc-if value="{{l.iCrown}}" hint-placeholder-val="{{ false }}"><path d="m3 8 4.5 4L12 5l4.5 7L21 8l-2 10H5Z"></path><path d="M5 21h14"></path></sc-if>
+</g>
+</svg>
+<sc-if value="{{l.done}}" hint-placeholder-val="{{ false }}">
+<span style="position: absolute; right: -2px; bottom: 0; width: 20px; height: 20px; border-radius: 999px; background: #FFFFFF; border: 2px solid #0D0A10; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#7D00D4" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+</sc-if>
+<sc-if value="{{l.locked}}" hint-placeholder-val="{{ false }}">
+<span style="position: absolute; right: -2px; bottom: 0; width: 20px; height: 20px; border-radius: 999px; background: #2A2430; border: 2px solid #0D0A10; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span>
+</sc-if>
+</div>
+<span style="font-size: 13px; font-weight: 600; color: {{l.nameInk}}">{{l.name}}</span>
+<span style="font-size: 11px; font-weight: 600; color: {{l.tagInk}}">{{l.tag}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<!-- Level detail (tap a level) -->
+<div style="margin-top: 10px; padding: 16px; border-radius: 20px; background: #1A1520; border: 1px solid rgba(255,255,255,0.08)">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+<span style="font-family: 'Instrument Serif', serif; font-size: 24px; line-height: 28px">{{sel.name}}</span>
+<span style="font-size: 12px; color: rgba(255,255,255,0.68)">Level {{sel.n}} · {{sel.range}}</span>
+</div>
+<div style="margin-top: 4px; font-size: 13px; line-height: 18px; color: rgba(255,255,255,0.75)">{{sel.status}}</div>
+<sc-if value="{{sel.current}}" hint-placeholder-val="{{ true }}">
+<div style="margin-top: 10px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1)"><div style="width: 85%; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #7D00D4, #C38BFF)"></div></div>
+</sc-if>
+<div style="margin-top: 12px; display: flex; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 20px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A2FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 2px" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"></path></svg>
+<span>{{sel.perk}}</span>
+</div>
+</div>
+<div style="margin-top: 8px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.55)">Tap a level to see what it unlocks</div>
+
+<!-- Stat tiles -->
+<h2 style="margin: 18px 0 0 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 32px">How It Adds Up</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px">
+<sc-for list="{{stats}}" as="t" hint-placeholder-count="3">
+<div style="padding: 14px 12px; border-radius: 18px; background: #1A1520; border: 1px solid rgba(255,255,255,0.08)">
+<div style="font-family: 'Instrument Serif', serif; font-size: 30px; line-height: 32px">{{t.value}}<span style="font-family: 'Inter', sans-serif; font-size: 13px; color: rgba(255,255,255,0.55)">{{t.of}}</span></div>
+<div style="margin-top: 2px; font-size: 12px; color: rgba(255,255,255,0.72)">{{t.label}}</div>
+<div style="margin-top: 8px; font-size: 12px; font-weight: 700; color: #D7F53A">+{{t.pts}}</div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top: 8px; padding: 6px 16px; border-radius: 20px; background: #1A1520; border: 1px solid rgba(255,255,255,0.08)">
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<div style="flex: 1">
+<div style="font-size: 14px; font-weight: 600">{{r.label}}</div>
+<div style="font-size: 12px; color: rgba(255,255,255,0.62)">{{r.rule}}</div>
+</div>
+<span style="font-size: 15px; font-weight: 700">{{r.pts}}</span>
+</div>
+</sc-for>
+<div style="display: flex; justify-content: space-between; padding: 14px 0 10px 0; font-size: 15px; font-weight: 700"><span>Total</span><span style="color: #D7F53A">640</span></div>
+</div>
+
+<!-- Cuisine passport -->
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 32px">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 32px">Cuisine Passport</h2>
+<span style="font-size: 13px; color: rgba(255,255,255,0.68)">7 of 15 stamped</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px">
+<sc-for list="{{cuisines}}" as="c" hint-placeholder-count="15">
+<div style="height: 64px; padding: 10px; box-sizing: border-box; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; background: {{c.bg}}; border: 1px {{c.lineStyle}} {{c.line}}">
+<span style="font-size: 13px; font-weight: 600; color: {{c.ink}}">{{c.name}}</span>
+<span style="font-size: 11px; font-weight: 600; color: {{c.subInk}}">{{c.sub}}</span>
+</div>
+</sc-for>
+</div>
+
+<!-- Areas -->
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 32px">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 32px">Your Dubai</h2>
+<span style="font-size: 13px; color: rgba(255,255,255,0.68)">5 of 12 areas</span>
+</div>
+<div style="margin-top: 12px; padding: 6px 16px; border-radius: 20px; background: #1A1520; border: 1px solid rgba(255,255,255,0.08)">
+<sc-for list="{{areas}}" as="a" hint-placeholder-count="5">
+<div style="padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">{{a.name}}</span><span style="color: rgba(255,255,255,0.68)">{{a.places}}</span></div>
+<div style="margin-top: 8px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08)"><div style="height: 4px; border-radius: 2px; background: #D7F53A; width: {{a.pct}}"></div></div>
+</div>
+</sc-for>
+<div style="padding: 12px 0 10px 0">
+<div style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.68)">Not yet explored · +30 pts each</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px">
+<sc-for list="{{newAreas}}" as="n" hint-placeholder-count="7">
+<span style="height: 28px; padding: 0 10px; border-radius: 999px; border: 1px dashed rgba(255,255,255,0.22); display: flex; align-items: center; font-size: 12px; color: rgba(255,255,255,0.78)">{{n}}</span>
+</sc-for>
+</div>
+</div>
+</div>
+
+<!-- Challenges -->
+<h2 style="margin: 32px 0 0 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 32px">Level Up Next</h2>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px">
+<sc-for list="{{challenges}}" as="h" hint-placeholder-count="3">
+<a href="Swipe.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 18px; background: #1A1520; border: 1px solid rgba(255,255,255,0.08); color: #FFFFFF; text-decoration: none">
+<img src="{{h.img}}" alt="" style="flex: none; width: 52px; height: 52px; border-radius: 12px; object-fit: cover">
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 14px; font-weight: 600">{{h.title}}</div>
+<div style="font-size: 12px; color: rgba(255,255,255,0.68)">{{h.sub}}</div>
+</div>
+<span style="height: 28px; padding: 0 10px; border-radius: 999px; background: rgba(215,245,58,0.12); color: #D7F53A; display: flex; align-items: center; font-size: 12px; font-weight: 700">+{{h.pts}}</span>
+</a>
+</sc-for>
+</div>
+
+<button type="button" style="margin-top: 28px; width: 100%; height: 52px; border-radius: 999px; background: #D7F53A; border: none; color: #0D0A10; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="m16 6-4-4-4 4M12 2v13"></path></svg>Share My Foodie Card</button>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2620}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const tried = ['Steakhouse', 'Italian', 'Café', 'Lebanese', 'Indian', 'Mediterranean', 'Emirati'];
+    const all = ['Steakhouse', 'Italian', 'Café', 'Lebanese', 'Indian', 'Mediterranean', 'Emirati', 'Asian', 'Japanese', 'Mexican', 'Thai', 'Persian', 'French', 'Korean', 'Seafood'];
+    const counts = { Steakhouse: '9 dishes', Italian: '5 dishes', 'Café': '4 dishes', Lebanese: '2 dishes', Indian: '2 dishes', Mediterranean: '1 dish', Emirati: '1 dish' };
+    const cuisines = all.map((name) => {
+      const ok = tried.indexOf(name) >= 0;
+      return ok
+        ? { name: name, sub: counts[name], bg: 'rgba(215,245,58,0.10)', line: 'rgba(215,245,58,0.45)', lineStyle: 'solid', ink: '#FFFFFF', subInk: '#D7F53A' }
+        : { name: name, sub: '+30 pts', bg: 'transparent', line: 'rgba(255,255,255,0.18)', lineStyle: 'dashed', ink: 'rgba(255,255,255,0.72)', subInk: 'rgba(255,255,255,0.5)' };
+    });
+    const areas = [
+      ['Business Bay', 6], ['Jumeirah', 4], ['Downtown Dubai', 3], ['Palm Jumeirah', 1], ['Dubai Marina', 1]
+    ].map((a) => ({ name: a[0], places: a[1] + (a[1] === 1 ? ' restaurant' : ' restaurants'), pct: Math.round(a[1] / 6 * 100) + '%' }));
+    const current = 1;
+    const selIdx = (this.state && this.state.sel != null) ? this.state.sel : current;
+    const defs = [
+      { name: 'Taster', range: '0–299 pts', icon: 'Spoon', c1: '#3F3A47', c2: '#57505F', perk: 'Personal dish picks on your home feed' },
+      { name: 'Explorer', range: '300–699 pts', icon: 'Compass', c1: '#7D00D4', c2: '#A64DFF', perk: 'Weekly dish drops and Explorer-only offers' },
+      { name: 'Foodie', range: '700–1,199 pts', icon: 'Chef', c1: '#8E1FE0', c2: '#D08BFF', perk: 'Early access to new restaurants and priority booking' },
+      { name: 'Legend', range: '1,200+ pts', icon: 'Crown', c1: '#A64DFF', c2: '#F2C46D', perk: "Chef's-table invites and surprise treats at partners" }
+    ];
+    const levels = defs.map((d, i) => {
+      const done = i < current;
+      const cur = i === current;
+      const locked = i > current;
+      return {
+        n: i + 1, name: d.name, range: d.range, perk: d.perk, gid: 'lvl' + i, c1: locked ? '#2E2A33' : d.c1, c2: locked ? '#45404D' : d.c2,
+        iSpoon: d.icon === 'Spoon', iFork: d.icon === 'Fork', iChef: d.icon === 'Chef', iCompass: d.icon === 'Compass', iGlass: d.icon === 'Glass', iCrown: d.icon === 'Crown',
+        done: done, current: cur, locked: locked,
+        badgeOp: locked ? 0.85 : 1,
+        tag: done ? 'Done' : (cur ? 'You' : (i === current + 1 ? '60 pts' : 'Locked')),
+        tagInk: done ? 'rgba(255,255,255,0.7)' : (cur ? '#FFFFFF' : 'rgba(255,255,255,0.5)'),
+        nameInk: locked ? 'rgba(255,255,255,0.6)' : '#FFFFFF',
+        tileBg: i === selIdx ? 'rgba(255,255,255,0.06)' : 'transparent',
+        tileLine: i === selIdx ? 'rgba(255,255,255,0.22)' : 'transparent',
+        status: done ? 'Unlocked. You passed this level.' : (cur ? "You're here · 340 of 400 pts, 60 to Foodie" : (i === current + 1 ? 'Next up · 60 pts to go' : 'Locked · ' + (1200 - 640) + ' pts to go')),
+        pick: () => this.setState({ sel: i })
+      };
+    });
+    return {
+      levels: levels,
+      sel: levels[selIdx],
+      stats: [
+        { value: '24', of: '', label: 'Dishes tried', pts: 240 },
+        { value: '7', of: '/15', label: 'Cuisines', pts: 210 },
+        { value: '5', of: '/12', label: 'Areas', pts: 150 }
+      ],
+      rules: [
+        { label: 'Dishes tried', rule: '24 × 10 pts, from bills paid with qlub', pts: '240' },
+        { label: 'New cuisines', rule: '7 × 30 pts, first dish in each', pts: '210' },
+        { label: 'New areas', rule: '5 × 30 pts, first visit in each', pts: '150' },
+        { label: 'Bonuses', rule: 'Saved-dish tried, 4-week streak', pts: '40' }
+      ],
+      cuisines: cuisines,
+      areas: areas,
+      newAreas: ['DIFC', 'JLT', 'City Walk', 'Bluewaters', 'La Mer', 'Al Seef', 'Al Quoz'],
+      challenges: [
+        { img: '/_blob/090502c157451c74888de0b5e70cd7e1', title: 'Try your saved Salmon Poke Bowl', sub: 'Asian5 · stamps Asian in your passport', pts: 40 },
+        { img: '/_blob/36fd8b2c286b7a9d06bafc41a39a67e5', title: 'Dine in DIFC', sub: '20 restaurants · new area', pts: 30 },
+        { img: '/_blob/e2068dbc6e7781929a333df99cb140e6', title: 'Try 3 dishes this week', sub: 'Keeps your 4-week streak going', pts: 25 }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

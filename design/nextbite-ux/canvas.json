@@ -1,0 +1,131 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "FoodieScore.dc.html": {
+      "h": 2620,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "Foodie Score",
+      "w": 390,
+      "x": 4910,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 2240,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "qlub+ Discover — with Dishes You'll Love",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Saved.dc.html": {
+      "h": 1180,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "Saved — Dishes & Restaurants",
+      "w": 390,
+      "x": 4440,
+      "y": 0
+    },
+    "State-Details.dc.html": {
+      "h": 780,
+      "title": "4 · Tap — Why this pick",
+      "w": 390,
+      "x": 2400,
+      "y": 0
+    },
+    "State-Done.dc.html": {
+      "h": 780,
+      "title": "7 · All caught up",
+      "w": 390,
+      "x": 3810,
+      "y": 0
+    },
+    "State-DragLeft.dc.html": {
+      "h": 780,
+      "title": "3 · Dragging left (Skip)",
+      "w": 390,
+      "x": 1930,
+      "y": 0
+    },
+    "State-DragRight.dc.html": {
+      "h": 780,
+      "title": "2 · Dragging right (Save)",
+      "w": 390,
+      "x": 1460,
+      "y": 0
+    },
+    "State-Intro.dc.html": {
+      "h": 780,
+      "title": "1 · First-time coach",
+      "w": 390,
+      "x": 990,
+      "y": 0
+    },
+    "State-Saved.dc.html": {
+      "h": 780,
+      "title": "5 · After save (Undo)",
+      "w": 390,
+      "x": 2870,
+      "y": 0
+    },
+    "State-Skipped.dc.html": {
+      "h": 780,
+      "title": "6 · After skip (Why skip?)",
+      "w": 390,
+      "x": 3340,
+      "y": 0
+    },
+    "Swipe.dc.html": {
+      "h": 780,
+      "is_interactive": true,
+      "title": "Swipe — Live prototype",
+      "w": 390,
+      "x": 520,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-19T07:45:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "savedTitle": {
+      "kind": "title1",
+      "maxW": 860,
+      "text": "Saved & Foodie Score",
+      "w": 240,
+      "x": 4440,
+      "y": -300
+    },
+    "swipeTitle": {
+      "kind": "title1",
+      "maxW": 3680,
+      "text": "Dishes You'll Love — Swipe UX",
+      "w": 240,
+      "x": 520,
+      "y": -300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Swipe.dc.html",
+    "State-Intro.dc.html",
+    "State-DragRight.dc.html",
+    "State-DragLeft.dc.html",
+    "State-Details.dc.html",
+    "State-Saved.dc.html",
+    "State-Skipped.dc.html",
+    "State-Done.dc.html",
+    "Saved.dc.html",
+    "FoodieScore.dc.html"
+  ],
+  "pages": [],
+  "title": "qlub+ Home — Dish Recommendations"
+}

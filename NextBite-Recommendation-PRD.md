@@ -226,6 +226,30 @@
 
 **Guided flow:** steps 1–3, plus "nothing nearby" (that tile is hidden).
 
+### Design
+
+**Canvas:** [qlub+ Home — Dish Recommendations](https://claude.ai/artifact/5vimkh14rSS4VYK1U3qkAN) (interactive prototype, 390 px phone frames). Source files: [`design/nextbite-ux/`](design/nextbite-ux/).
+
+| Screen | What it shows | PRD link |
+|--------|---------------|----------|
+| qlub+ Discover, with Dishes You'll Love | The swipe stack inside the qlub+ Discover home, below "Visit again" and above "Best offers near you" | J2, R1–R2 |
+| Swipe — live prototype | Full-screen swipe stack: drag to save or skip, tap a card for "Why this pick", Save / Skip buttons | J2, R3 |
+| 1 · First-time coach | "Swipe to teach your taste" overlay on first open | J1 |
+| 2 · Dragging right (Save) | Save stamp while dragging right | R3 |
+| 3 · Dragging left (Skip) | Skip stamp while dragging left | R3 |
+| 4 · Tap — Why this pick | Card flips to the match % and 3 personal signals, with View restaurant / Save dish | R10, BR12 |
+| 5 · After save (Undo) | "Saved to Your Cravings" toast with Undo | R3 |
+| 6 · After skip (Why skip?) | Skip toast with quick reasons ("Why skip?"), then "We'll show fewer dishes like this" | R4, BR8 |
+| 7 · All caught up | End of stack: saved count, Start over, Plan a visit | J2 (end of stack) |
+| Saved — Dishes & Restaurants | Dishes / Restaurants tabs, "2 of 4 tried" tasting list, All / To try / Tried filters, auto-tick on qlub payment | J4, R7–R8, BR11 |
+| Foodie Score | Points, 4 levels, cuisine passport, areas explored, next challenges, shareable card | Not in this PRD yet (see below) |
+
+**Where the design and the PRD differ (to settle):**
+- **Refresh:** the design says picks are "Refreshed daily"; the PRD says weekly plus after every 10 feedback events (BR4).
+- **"Why skip?" reasons:** the design asks the diner for a skip reason; the PRD learns from patterns only (BR8). If kept, skip reasons should be added as a feedback signal.
+- **Foodie Score** (points for tried dishes, new cuisines and new areas) is in the design but not in the requirements. It fits S3 habit features; it needs its own rules before it's built.
+- **"Not what you're looking for?"** (J3) has no screen yet.
+
 ---
 
 ## 8. Technical Impact
