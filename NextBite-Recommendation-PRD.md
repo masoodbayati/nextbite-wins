@@ -230,6 +230,8 @@
 
 **Canvas:** [qlub+ Home — Dish Recommendations](https://claude.ai/artifact/5vimkh14rSS4VYK1U3qkAN) (interactive prototype, 390 px phone frames). Source files: [`design/nextbite-ux/`](design/nextbite-ux/).
 
+**Live prototype:** [Dishes You'll Love](https://claude.ai/artifact/RzY3vELegFUkmPg86x9GGA) (the "Dishes You'll Love" swipe flow, with an intro you can replay and an event log).
+
 | Screen | What it shows | PRD link |
 |--------|---------------|----------|
 | qlub+ Discover, with Dishes You'll Love | The swipe stack inside the qlub+ Discover home, below "Visit again" and above "Best offers near you" | J2, R1–R2 |
