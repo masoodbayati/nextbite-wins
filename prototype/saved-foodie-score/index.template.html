@@ -1,0 +1,606 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>qlub+ Saved</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --bg: #0D0A10;
+    --card: #1A1520;
+    --card-2: #1F1A26;
+    --line: rgba(255,255,255,0.08);
+    --line-2: rgba(255,255,255,0.14);
+    --lime: #D7F53A;
+    --lime-tint: rgba(215,245,58,0.12);
+    --purple: #7D00D4;
+    --purple-light: #A64DFF;
+    --coral: #FF8A80;
+    --gold: #F7CF7A;
+    --ink: #FFFFFF;
+    --ink-2: rgba(255,255,255,0.72);
+    --ink-3: rgba(255,255,255,0.6);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  :root { color-scheme: dark; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); }
+  body { font-family: var(--sans); letter-spacing: -0.01em; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+
+  .screen { max-width: 390px; margin: 0 auto; padding-block: 40px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); min-height: 100vh; }
+  .serif { font-family: var(--serif); font-weight: 400; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: rgba(255,255,255,0.68); }
+
+  /* Header */
+  .header { display: flex; align-items: center; gap: 14px; }
+  .icon-btn { flex: none; width: 44px; height: 44px; border-radius: 999px; background: var(--card); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .header .eyebrow { font-weight: 500; letter-spacing: 0.16em; }
+  .header h1 { margin: 0; font-size: 32px; line-height: 36px; }
+
+  /* Foodie score card */
+  .score-card { margin-top: 20px; display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 22px; background: linear-gradient(135deg, var(--card-2) 0%, var(--card) 100%); border: 1px solid rgba(255,255,255,0.1); transition: transform .15s ease, border-color .15s ease; }
+  .score-card:hover { border-color: rgba(166,77,255,0.45); }
+  .score-card:active { transform: scale(0.99); }
+  .ring { position: relative; flex: none; width: 64px; height: 64px; }
+  .ring .badge { position: absolute; left: 14px; top: 14px; }
+  .score-main { flex: 1; min-width: 0; }
+  .score-row { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
+  .score-row .num { font-size: 34px; line-height: 36px; }
+  .score-row .lvl { display: flex; flex-direction: column; line-height: 15px; }
+  .score-row .lvl b { font-size: 13px; font-weight: 600; }
+  .score-row .lvl small { font-size: 11px; color: var(--ink-3); }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .stats > div { display: flex; flex-direction: column; }
+  .stats > div + div { padding-left: 10px; border-left: 1px solid var(--line); }
+  .stats b { font-size: 16px; font-weight: 700; line-height: 20px; }
+  .stats b small { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); }
+  .stats span { font-size: 11px; color: var(--ink-3); }
+
+  /* Tabs */
+  .tabs { margin-top: 20px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 999px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); }
+  .tab { height: 40px; border-radius: 999px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; background: transparent; color: rgba(255,255,255,0.75); transition: background .2s, color .2s; }
+  .tab[aria-selected="true"] { background: #FFFFFF; color: var(--bg); }
+
+  /* Tasting progress */
+  .card { background: var(--card); border: 1px solid var(--line); }
+  .tasting { margin-top: 16px; padding: 18px; border-radius: 22px; }
+  .tasting-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .tasting-title { margin-top: 4px; font-size: 28px; line-height: 32px; }
+  .chip-lime { height: 28px; padding: 0 10px; border-radius: 999px; background: var(--lime-tint); color: var(--lime); display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .segments { display: grid; gap: 6px; margin-top: 14px; }
+  .segments i { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.14); transition: background .3s; }
+  .segments i.on { background: var(--lime); }
+  .nudge { margin-top: 12px; font-size: 13px; line-height: 18px; color: var(--ink-2); }
+  .nudge b { color: #fff; font-weight: 600; }
+
+  /* Filters */
+  .filters { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .filter { height: 36px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; background: var(--card); border: 1px solid var(--line-2); color: #fff; }
+  .filter[aria-pressed="true"] { background: var(--lime-tint); border-color: rgba(215,245,58,0.6); color: var(--lime); }
+
+  /* Dish rows */
+  .dishes { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .dish { display: flex; gap: 12px; padding: 10px; border-radius: 20px; transition: opacity .25s, transform .25s; }
+  .dish.is-tried .thumb img { opacity: 0.6; }
+  .dish.is-tried .dish-name { color: rgba(255,255,255,0.7); }
+  .dish.leaving { opacity: 0; transform: translateX(24px); }
+  .thumb { position: relative; flex: none; width: 92px; height: 92px; }
+  .thumb img { width: 92px; height: 92px; border-radius: 14px; object-fit: cover; display: block; }
+  .thumb .check { position: absolute; left: 6px; top: 6px; width: 24px; height: 24px; border-radius: 999px; background: var(--lime); display: flex; align-items: center; justify-content: center; }
+  .dish-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+  .dish-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .dish-name { font-size: 22px; line-height: 24px; }
+  .unsave { flex: none; width: 32px; height: 32px; margin: -4px -4px 0 0; border-radius: 999px; background: transparent; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .unsave:hover { background: rgba(255,138,128,0.12); }
+  .dish-meta { font-size: 12px; color: rgba(255,255,255,0.68); }
+  .dish-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .tried-line { font-size: 12px; font-weight: 600; color: var(--lime); }
+  .pts { height: 26px; padding: 0 9px; border-radius: 999px; background: var(--lime-tint); color: var(--lime); display: flex; align-items: center; font-size: 12px; font-weight: 700; flex: none; }
+  .offer { font-size: 12px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .empty { padding: 28px 16px; border-radius: 20px; text-align: center; color: var(--ink-3); font-size: 13px; }
+  .empty .serif { display: block; font-size: 22px; color: #fff; margin-bottom: 4px; }
+
+  .footnote { display: flex; gap: 10px; align-items: flex-start; margin-top: 16px; padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px dashed var(--line-2); font-size: 12px; line-height: 17px; color: rgba(255,255,255,0.7); }
+
+  /* Restaurants tab */
+  .places-count { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.68); }
+  .place-img { display: block; margin-top: 14px; width: 100%; aspect-ratio: 358 / 201; object-fit: cover; border-radius: 18px; }
+  .place-head { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 8px; }
+  .place-name { font-size: 24px; }
+  .rating { display: flex; align-items: center; gap: 3px; font-size: 13px; font-weight: 600; }
+  .offers { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: 14px; font-weight: 600; }
+  .offers .sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+  .offers .bank { color: var(--gold); }
+  .place-tags { margin-top: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--ink-3); }
+
+  /* Toast */
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 14px; padding: 12px 14px 12px 16px; border-radius: 16px; background: #2A2331; border: 1px solid rgba(255,255,255,0.1); font-size: 13px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: opacity .2s, transform .2s; width: max-content; max-width: calc(100vw - 32px); }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .toast button { background: none; border: none; color: var(--lime); font-weight: 700; cursor: pointer; padding: 4px; }
+
+  [hidden] { display: none !important; }
+
+  /* ---------- Foodie Score view ---------- */
+  .header .grow { flex: 1; }
+  .hero { margin-top: 20px; padding: 24px 20px 20px; border-radius: 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .hero-ring { position: relative; width: 210px; max-width: 100%; aspect-ratio: 1; }
+  .hero-ring svg.big { width: 100%; height: 100%; display: block; }
+  .hero-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .hero-center .num { font-size: 60px; line-height: 60px; font-variant-numeric: tabular-nums; }
+  .pill { margin-top: 12px; height: 30px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,0.08); display: flex; align-items: center; font-size: 13px; font-weight: 700; }
+  .hero p { margin: 10px 0 0; font-size: 14px; line-height: 20px; color: rgba(255,255,255,0.8); }
+  .hero p b { font-weight: 600; color: #fff; }
+
+  .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 32px; }
+  .sec-head h2, .h2 { margin: 0; font-size: 28px; line-height: 32px; }
+  .sec-head span { font-size: 13px; color: rgba(255,255,255,0.68); }
+
+  .journey { position: relative; margin-top: 16px; }
+  .j-line { position: absolute; left: 12.5%; right: 12.5%; top: 33px; height: 2px; background: rgba(255,255,255,0.12); }
+  .j-line i { display: block; height: 100%; background: var(--purple); }
+  .j-tiles { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .tile { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 0 10px; border-radius: 18px; background: transparent; border: 1px solid transparent; cursor: pointer; }
+  .tile[aria-pressed="true"] { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.22); }
+  .tile .b { position: relative; width: 56px; height: 56px; }
+  .tile .nm { font-size: 13px; font-weight: 600; }
+  .tile .tg { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); }
+  .tile.done .tg { color: rgba(255,255,255,0.7); }
+  .tile.cur .tg { color: #fff; }
+  .tile.locked .nm { color: rgba(255,255,255,0.6); }
+  .tile .mark { position: absolute; right: -2px; bottom: 0; width: 20px; height: 20px; border-radius: 999px; border: 2px solid var(--bg); display: flex; align-items: center; justify-content: center; }
+  .tile .mark.ok { background: #fff; }
+  .tile .mark.lock { background: #2A2430; }
+
+  .detail { margin-top: 10px; padding: 16px; border-radius: 20px; }
+  .detail-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .detail-top .serif { font-size: 24px; line-height: 28px; }
+  .detail-top span:last-child { font-size: 12px; color: rgba(255,255,255,0.68); text-align: right; }
+  .detail .status { margin-top: 4px; font-size: 13px; line-height: 18px; color: rgba(255,255,255,0.75); }
+  .bar { margin-top: 10px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); }
+  .bar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #7D00D4, #C38BFF); }
+  .perk { margin-top: 12px; display: flex; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 20px; }
+  .perk svg { flex: none; margin-top: 2px; }
+  .hint { margin-top: 8px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.55); }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .stat { padding: 14px 12px; border-radius: 18px; }
+  .stat .v { font-size: 30px; line-height: 32px; font-variant-numeric: tabular-nums; }
+  .stat .v small { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.55); }
+  .stat .l { margin-top: 2px; font-size: 12px; color: var(--ink-2); }
+  .stat .p { margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--lime); }
+  .rules { margin-top: 8px; padding: 6px 16px; border-radius: 20px; }
+  .rule { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .rule > div { flex: 1; min-width: 0; }
+  .rule b { display: block; font-size: 14px; font-weight: 600; }
+  .rule small { font-size: 12px; color: rgba(255,255,255,0.62); }
+  .rule > span { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .total { display: flex; justify-content: space-between; padding: 14px 0 10px; font-size: 15px; font-weight: 700; }
+  .total span:last-child { color: var(--lime); }
+
+  .passport { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .stamp { min-height: 64px; padding: 10px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 6px; background: rgba(215,245,58,0.10); border: 1px solid rgba(215,245,58,0.45); }
+  .stamp .n { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+  .stamp .s { font-size: 11px; font-weight: 600; color: var(--lime); }
+  .stamp.open { background: transparent; border: 1px dashed rgba(255,255,255,0.18); }
+  .stamp.open .n { color: rgba(255,255,255,0.72); }
+  .stamp.open .s { color: rgba(255,255,255,0.5); }
+
+  .areas { margin-top: 12px; padding: 6px 16px; border-radius: 20px; }
+  .area { padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .area div:first-child { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+  .area div:first-child span:last-child { color: rgba(255,255,255,0.68); }
+  .area .t { margin-top: 8px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); }
+  .area .t i { display: block; height: 100%; border-radius: 2px; background: var(--lime); }
+  .unexplored { padding: 12px 0 10px; }
+  .unexplored > b { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.68); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chips span { height: 28px; padding: 0 10px; border-radius: 999px; border: 1px dashed rgba(255,255,255,0.22); display: flex; align-items: center; font-size: 12px; color: rgba(255,255,255,0.78); }
+
+  .challenges { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .chal { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 18px; width: 100%; text-align: left; cursor: pointer; }
+  .chal img { flex: none; width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
+  .chal > div { flex: 1; min-width: 0; }
+  .chal b { display: block; font-size: 14px; font-weight: 600; }
+  .chal small { font-size: 12px; color: rgba(255,255,255,0.68); }
+  .chal .chip-lime { flex: none; }
+
+  .cta { margin-top: 28px; width: 100%; height: 52px; border-radius: 999px; background: var(--lime); border: none; color: var(--bg); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+
+  .sheet { position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; background: rgba(0,0,0,0.6); }
+  .sheet-body { width: 100%; max-width: 390px; padding: 22px 20px calc(24px + env(safe-area-inset-bottom, 0px)); border-radius: 28px 28px 0 0; background: #1F1A26; border: 1px solid rgba(255,255,255,0.1); }
+  .sheet-body h3 { margin: 0; font-size: 28px; line-height: 32px; }
+  .sheet-body p { margin: 8px 0 0; font-size: 14px; line-height: 20px; color: var(--ink-2); }
+  .sheet-body ul { margin: 12px 0 0; padding-left: 18px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
+  .sheet-body .cta { margin-top: 20px; }
+</style>
+<main class="screen" id="view-saved">
+
+  <!-- Header -->
+  <header class="header">
+    <button class="icon-btn" type="button" aria-label="Back" onclick="history.back()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    </button>
+    <div>
+      <div class="eyebrow">YOUR</div>
+      <h1 class="serif">Saved</h1>
+    </div>
+  </header>
+
+  <!-- Foodie Score entry -->
+  <a class="score-card" href="#foodie-score" aria-label="Foodie Score: 640 points, Level 2 Explorer">
+    <div class="ring">
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="5"/>
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#A64DFF" stroke-width="5" stroke-linecap="round" stroke-dasharray="150 176" transform="rotate(-90 32 32)"/>
+      </svg>
+      <svg class="badge" width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 3 42 13.5v21L24 45 6 34.5v-21Z" fill="#7D00D4" stroke="#7D00D4" stroke-width="4" stroke-linejoin="round"/>
+        <g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5Z"/></g>
+      </svg>
+    </div>
+    <div class="score-main">
+      <div class="eyebrow">FOODIE SCORE · LEVEL 2</div>
+      <div class="score-row">
+        <span class="num serif">640</span>
+        <span class="lvl"><b>Explorer</b><small>60 pts to Foodie</small></span>
+      </div>
+      <div class="stats">
+        <div><b>15</b><span>Restaurants</span></div>
+        <div><b>7<small>/15</small></b><span>Cuisines</span></div>
+        <div><b>5<small>/12</small></b><span>Areas</span></div>
+      </div>
+    </div>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+  </a>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab" type="button" role="tab" id="tab-dishes" aria-controls="panel-dishes" aria-selected="true">Dishes · <span data-count="dishes">4</span></button>
+    <button class="tab" type="button" role="tab" id="tab-places" aria-controls="panel-places" aria-selected="false">Restaurants · <span data-count="places">1</span></button>
+  </div>
+
+  <!-- DISHES TAB -->
+  <section id="panel-dishes" role="tabpanel" aria-labelledby="tab-dishes">
+    <div class="card tasting" id="tasting">
+      <div class="tasting-top">
+        <div>
+          <div class="eyebrow">YOUR TASTING LIST</div>
+          <div class="tasting-title serif" id="tasting-title">2 of 4 tried</div>
+        </div>
+        <div class="chip-lime" id="waiting">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2Z"/></svg>
+          <span id="waiting-text">+50 pts waiting</span>
+        </div>
+      </div>
+      <div class="segments" id="segments"></div>
+      <div class="nudge" id="nudge"></div>
+    </div>
+
+    <div class="filters" id="filters"></div>
+    <div class="dishes" id="dishes"></div>
+
+    <div class="footnote">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7F53A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M15 15h2v2M21 15v6h-6M17 21v-2"/></svg>
+      <span>Dishes are ticked off automatically when they're on a bill you pay with qlub. No check-ins needed.</span>
+    </div>
+  </section>
+
+  <!-- RESTAURANTS TAB -->
+  <section id="panel-places" role="tabpanel" aria-labelledby="tab-places" hidden>
+    <div class="places-count">1 saved place</div>
+    <img class="place-img" src="{{IMG:restaurant-peaches-cream}}" alt="Peaches &amp; Cream - Palm terrace">
+    <div class="place-head">
+      <span class="place-name serif">Peaches &amp; Cream - Palm</span>
+      <span class="rating"><svg width="12" height="12" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>4.8</span>
+    </div>
+    <div class="offers"><span>30% off</span><span class="sep"></span><span class="bank">+25% bank offer</span></div>
+    <div class="place-tags">PALM JUMEIRAH · BEACH/POOL CLUB · MEDITERRANEAN</div>
+    <div class="chip-lime" style="margin-top:12px">New area + new cuisine · up to +70 pts</div>
+  </section>
+
+</main>
+
+<main class="screen" id="view-score" hidden>
+  <header class="header">
+    <button class="icon-btn" type="button" aria-label="Back to saved" id="score-back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="grow">
+      <div class="eyebrow" style="font-weight:500;letter-spacing:0.16em">YOUR</div>
+      <h1 class="serif">Foodie Score</h1>
+    </div>
+    <button class="icon-btn" type="button" aria-label="How the score works" id="info-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    </button>
+  </header>
+
+  <section class="card hero" aria-label="Level progress">
+    <div class="hero-ring">
+      <svg class="big" viewBox="0 0 210 210" aria-hidden="true">
+        <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7D00D4"/><stop offset="1" stop-color="#C38BFF"/></linearGradient></defs>
+        <circle cx="105" cy="105" r="92" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"/>
+        <circle cx="105" cy="105" r="92" fill="none" stroke="url(#ringGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="491 600" transform="rotate(-90 105 105)"/>
+      </svg>
+      <div class="hero-center">
+        <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 42 13.5v21L24 45 6 34.5v-21Z" fill="#7D00D4" stroke="#7D00D4" stroke-width="4" stroke-linejoin="round"/><g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5Z"/></g></svg>
+        <span class="num serif">640</span>
+        <span class="eyebrow">FOODIE POINTS</span>
+      </div>
+    </div>
+    <div class="pill">Level 2 of 4 · Explorer</div>
+    <p><b>60 pts</b> to Foodie. A new cuisine gets you there faster.</p>
+  </section>
+
+  <div class="sec-head"><h2 class="serif">Your Level Journey</h2><span>2 of 4 unlocked</span></div>
+  <div class="journey">
+    <div class="j-line"><i id="j-fill"></i></div>
+    <div class="j-tiles" id="j-tiles"></div>
+  </div>
+  <div class="card detail" id="detail" aria-live="polite"></div>
+  <div class="hint">Tap a level to see what it unlocks</div>
+
+  <h2 class="serif h2" style="margin-top:18px">How It Adds Up</h2>
+  <div class="stat-grid" id="stat-grid"></div>
+  <div class="card rules" id="rules"></div>
+
+  <div class="sec-head"><h2 class="serif">Cuisine Passport</h2><span>7 of 15 stamped</span></div>
+  <div class="passport" id="passport"></div>
+
+  <div class="sec-head"><h2 class="serif">Your Dubai</h2><span>5 of 12 areas</span></div>
+  <div class="card areas" id="areas"></div>
+
+  <h2 class="serif h2" style="margin-top:32px">Level Up Next</h2>
+  <div class="challenges" id="challenges"></div>
+
+  <button class="cta" type="button" id="share">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4M12 2v13"/></svg>
+    <span id="share-label">Share My Foodie Card</span>
+  </button>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-body" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <h3 class="serif" id="sheet-title">How points work</h3>
+    <p>Points come from bills you pay with qlub. Each dish on a bill counts toward your score.</p>
+    <ul>
+      <li>10 pts for every dish you try</li>
+      <li>30 pts for the first dish in a new cuisine</li>
+      <li>30 pts for your first visit to a new area</li>
+      <li>Bonus points for tried saved dishes and weekly streaks</li>
+    </ul>
+    <button class="cta" type="button" id="sheet-close">Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-text"></span><button type="button" id="undo">Undo</button></div>
+
+<script>
+(function () {
+  // Sample data — replace with API: savedDishes[{ id, img, dish, restaurant, area, tried, triedAt, pts, offer, unlocks }]
+  var dishes = [
+    { id: 'shortrib', img: '{{IMG:dish-shortrib}}', dish: 'Smoked Short Rib', restaurant: '11 Woodfire', area: 'Jumeirah', tried: true, when: '12 Oct', pts: 10, offer: '' },
+    { id: 'sliders', img: '{{IMG:dish-sliders}}', dish: 'Wagyu Sliders', restaurant: '11 Woodfire', area: 'Jumeirah', tried: true, when: '12 Oct', pts: 10, offer: '' },
+    { id: 'poke', img: '{{IMG:dish-poke}}', dish: 'Salmon Poke Bowl', restaurant: 'Asian5', area: 'Dubai Mall', tried: false, pts: 40, offer: 'New cuisine · bank offer', unlocks: 'Asian' },
+    { id: 'pasta', img: '{{IMG:dish-pasta}}', dish: 'Tagliatelle al Burro', restaurant: 'Birdies', area: 'Business Bay', tried: false, pts: 10, offer: '20% off · Early bird' }
+  ];
+  var state = { tab: 'dishes', filter: 'todo' };
+  var lastRemoved = null, toastTimer = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+
+  var CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D0A10" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+  var HEART = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#FF8A80" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg>';
+
+  function render() {
+    var tried = dishes.filter(function (d) { return d.tried; });
+    var todo = dishes.filter(function (d) { return !d.tried; });
+    var waiting = todo.reduce(function (s, d) { return s + d.pts; }, 0);
+
+    // Tabs
+    var onDishes = state.tab === 'dishes';
+    $('tab-dishes').setAttribute('aria-selected', onDishes);
+    $('tab-places').setAttribute('aria-selected', !onDishes);
+    $('panel-dishes').hidden = !onDishes;
+    $('panel-places').hidden = onDishes;
+    document.querySelector('[data-count="dishes"]').textContent = dishes.length;
+
+    // Tasting progress
+    $('tasting').hidden = dishes.length === 0;
+    $('tasting-title').textContent = tried.length + ' of ' + dishes.length + ' tried';
+    $('waiting').hidden = waiting === 0;
+    $('waiting-text').textContent = '+' + waiting + ' pts waiting';
+    var seg = $('segments');
+    seg.style.gridTemplateColumns = 'repeat(' + Math.max(dishes.length, 1) + ', minmax(0, 1fr))';
+    seg.innerHTML = dishes.map(function (d) { return '<i class="' + (d.tried ? 'on' : '') + '"></i>'; }).join('');
+    var nudgeDish = todo.filter(function (d) { return d.unlocks; })[0] || todo[0];
+    $('nudge').innerHTML = !nudgeDish
+      ? 'All tried. Swipe for more dishes to keep earning.'
+      : nudgeDish.unlocks
+        ? 'Try the ' + esc(nudgeDish.dish) + ' to unlock <b>' + esc(nudgeDish.unlocks) + '</b> as a new cuisine (+30 pts).'
+        : 'Try the ' + esc(nudgeDish.dish) + ' at <b>' + esc(nudgeDish.restaurant) + '</b> to earn +' + nudgeDish.pts + ' pts.';
+
+    // Filters
+    var f = [['todo', 'To Try · ' + todo.length], ['tried', 'Tried · ' + tried.length], ['all', 'All · ' + dishes.length]];
+    $('filters').innerHTML = f.map(function (x) {
+      return '<button type="button" class="filter" data-filter="' + x[0] + '" aria-pressed="' + (state.filter === x[0]) + '">' + x[1] + '</button>';
+    }).join('');
+
+    // Dish rows
+    var list = state.filter === 'all' ? todo.concat(tried) : state.filter === 'tried' ? tried : todo;
+    $('dishes').innerHTML = list.length ? list.map(function (d) {
+      var foot = d.tried
+        ? '<span class="tried-line">Tried ' + esc(d.when) + ' · +' + d.pts + ' earned</span>'
+        : '<span class="pts">+' + d.pts + ' pts</span><span class="offer">' + esc(d.offer) + '</span>';
+      return '<article class="dish card' + (d.tried ? ' is-tried' : '') + '" data-id="' + d.id + '">' +
+        '<div class="thumb"><img src="' + d.img + '" alt="' + esc(d.dish) + '">' + (d.tried ? '<span class="check">' + CHECK + '</span>' : '') + '</div>' +
+        '<div class="dish-body">' +
+          '<div class="dish-head"><span class="dish-name serif">' + esc(d.dish) + '</span>' +
+          '<button type="button" class="unsave" data-unsave="' + d.id + '" aria-label="Remove ' + esc(d.dish) + ' from saved">' + HEART + '</button></div>' +
+          '<span class="dish-meta">' + esc(d.restaurant) + ' · ' + esc(d.area) + '</span>' +
+          '<div class="dish-foot">' + foot + '</div>' +
+        '</div></article>';
+    }).join('') : '<div class="empty card"><span class="serif">' + (dishes.length ? (state.filter === 'todo' ? 'Everything tried' : 'Nothing here yet') : 'No saved dishes') + '</span>' +
+      (dishes.length ? (state.filter === 'todo' ? 'Swipe right on more dishes to keep earning.' : 'Pay a bill with qlub and tried dishes show up here.') : 'Swipe right on dishes you want to try.') + '</div>';
+  }
+
+  function showToast(text) {
+    $('toast-text').textContent = text;
+    $('toast').classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $('toast').classList.remove('show'); lastRemoved = null; }, 4000);
+  }
+
+  $('tab-dishes').addEventListener('click', function () { state.tab = 'dishes'; render(); });
+  $('tab-places').addEventListener('click', function () { state.tab = 'places'; render(); });
+  $('filters').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-filter]');
+    if (b) { state.filter = b.dataset.filter; render(); }
+  });
+  $('dishes').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-unsave]');
+    if (!b) return;
+    var id = b.dataset.unsave;
+    var idx = dishes.findIndex(function (d) { return d.id === id; });
+    var row = b.closest('.dish');
+    row.classList.add('leaving');
+    setTimeout(function () {
+      lastRemoved = { dish: dishes[idx], idx: idx };
+      dishes.splice(idx, 1);
+      render();
+      showToast(lastRemoved.dish.dish + ' removed');
+    }, 220);
+  });
+  $('undo').addEventListener('click', function () {
+    if (!lastRemoved) return;
+    dishes.splice(lastRemoved.idx, 0, lastRemoved.dish);
+    lastRemoved = null;
+    $('toast').classList.remove('show');
+    render();
+  });
+
+  render();
+})();
+
+// ---------- Foodie Score view ----------
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+
+  // Sample data — replace with user / levels / challenges from the API
+  var current = 1;
+  var ICONS = {
+    Spoon: '<ellipse cx="12" cy="7.5" rx="4" ry="5.5"/><path d="M12 13v9"/>',
+    Compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5Z"/>',
+    Chef: '<path d="M6 13.9A4 4 0 0 1 7.5 6a5 5 0 0 1 9 0 4 4 0 0 1 1.5 7.9V20H6Z"/><path d="M6 16.5h12"/>',
+    Crown: '<path d="m3 8 4.5 4L12 5l4.5 7L21 8l-2 10H5Z"/><path d="M5 21h14"/>'
+  };
+  var levels = [
+    { name: 'Taster', range: '0–299 pts', icon: 'Spoon', c1: '#3F3A47', c2: '#57505F', perk: 'Personal dish picks on your home feed' },
+    { name: 'Explorer', range: '300–699 pts', icon: 'Compass', c1: '#7D00D4', c2: '#A64DFF', perk: 'Weekly dish drops and Explorer-only offers' },
+    { name: 'Foodie', range: '700–1,199 pts', icon: 'Chef', c1: '#8E1FE0', c2: '#D08BFF', perk: 'Early access to new restaurants and priority booking' },
+    { name: 'Legend', range: '1,200+ pts', icon: 'Crown', c1: '#A64DFF', c2: '#F2C46D', perk: "Chef's-table invites and surprise treats at partners" }
+  ];
+  var stats = [
+    { v: '24', of: '', label: 'Dishes tried', pts: 240 },
+    { v: '7', of: '/15', label: 'Cuisines', pts: 210 },
+    { v: '5', of: '/12', label: 'Areas', pts: 150 }
+  ];
+  var rules = [
+    ['Dishes tried', '24 × 10 pts, from bills paid with qlub', 240],
+    ['New cuisines', '7 × 30 pts, first dish in each', 210],
+    ['New areas', '5 × 30 pts, first visit in each', 150],
+    ['Bonuses', 'Saved-dish tried, 4-week streak', 40]
+  ];
+  var allCuisines = ['Steakhouse', 'Italian', 'Café', 'Lebanese', 'Indian', 'Mediterranean', 'Emirati', 'Asian', 'Japanese', 'Mexican', 'Thai', 'Persian', 'French', 'Korean', 'Seafood'];
+  var counts = { Steakhouse: '9 dishes', Italian: '5 dishes', 'Café': '4 dishes', Lebanese: '2 dishes', Indian: '2 dishes', Mediterranean: '1 dish', Emirati: '1 dish' };
+  var areas = [['Business Bay', 6], ['Jumeirah', 4], ['Downtown Dubai', 3], ['Palm Jumeirah', 1], ['Dubai Marina', 1]];
+  var newAreas = ['DIFC', 'JLT', 'City Walk', 'Bluewaters', 'La Mer', 'Al Seef', 'Al Quoz'];
+  var challenges = [
+    { img: '{{IMG:dish-poke}}', title: 'Try your saved Salmon Poke Bowl', sub: 'Asian5 · stamps Asian in your passport', pts: 40 },
+    { img: '{{IMG:area-difc}}', title: 'Dine in DIFC', sub: '20 restaurants · new area', pts: 30 },
+    { img: '{{IMG:dish-pasta}}', title: 'Try 3 dishes this week', sub: 'Keeps your 4-week streak going', pts: 25 }
+  ];
+  var sel = current;
+
+  function badge(l, i) {
+    var locked = i > current;
+    var c1 = locked ? '#2E2A33' : l.c1, c2 = locked ? '#45404D' : l.c2, gid = 'lvl' + i;
+    return '<svg width="56" height="56" viewBox="0 0 48 48" aria-hidden="true"' + (locked ? ' style="opacity:.85"' : '') + '>' +
+      '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c1 + '"/><stop offset="1" stop-color="' + c2 + '"/></linearGradient></defs>' +
+      '<path d="M24 3 42 13.5v21L24 45 6 34.5v-21Z" fill="url(#' + gid + ')" stroke="url(#' + gid + ')" stroke-width="4" stroke-linejoin="round"/>' +
+      '<g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + ICONS[l.icon] + '</g></svg>';
+  }
+  var OK = '<span class="mark ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#7D00D4" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>';
+  var LOCK = '<span class="mark lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>';
+
+  function renderLevels() {
+    $('j-fill').style.width = (current / (levels.length - 1) * 100) + '%';
+    $('j-tiles').innerHTML = levels.map(function (l, i) {
+      var cls = i < current ? 'done' : i === current ? 'cur' : 'locked';
+      var tag = i < current ? 'Done' : i === current ? 'You' : i === current + 1 ? '60 pts' : 'Locked';
+      return '<button type="button" class="tile ' + cls + '" data-i="' + i + '" aria-pressed="' + (i === sel) + '" aria-label="' + l.name + ' level details">' +
+        '<div class="b">' + badge(l, i) + (i < current ? OK : i > current ? LOCK : '') + '</div>' +
+        '<span class="nm">' + l.name + '</span><span class="tg">' + tag + '</span></button>';
+    }).join('');
+    var l = levels[sel];
+    var status = sel < current ? 'Unlocked. You passed this level.' : sel === current ? "You're here · 340 of 400 pts, 60 to Foodie" : sel === current + 1 ? 'Next up · 60 pts to go' : 'Locked · ' + (1200 - 640) + ' pts to go';
+    $('detail').innerHTML =
+      '<div class="detail-top"><span class="serif">' + l.name + '</span><span>Level ' + (sel + 1) + ' · ' + l.range + '</span></div>' +
+      '<div class="status">' + status + '</div>' +
+      (sel === current ? '<div class="bar"><i style="width:85%"></i></div>' : '') +
+      '<div class="perk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A2FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><span>' + esc(l.perk) + '</span></div>';
+  }
+
+  function renderStatic() {
+    $('stat-grid').innerHTML = stats.map(function (t) {
+      return '<div class="card stat"><div class="v serif">' + t.v + '<small>' + t.of + '</small></div><div class="l">' + t.label + '</div><div class="p">+' + t.pts + '</div></div>';
+    }).join('');
+    var total = rules.reduce(function (s, r) { return s + r[2]; }, 0);
+    $('rules').innerHTML = rules.map(function (r) {
+      return '<div class="rule"><div><b>' + r[0] + '</b><small>' + r[1] + '</small></div><span>' + r[2] + '</span></div>';
+    }).join('') + '<div class="total"><span>Total</span><span>' + total + '</span></div>';
+    $('passport').innerHTML = allCuisines.map(function (n) {
+      var ok = counts[n];
+      return '<div class="stamp' + (ok ? '' : ' open') + '"><span class="n">' + n + '</span><span class="s">' + (ok || '+30 pts') + '</span></div>';
+    }).join('');
+    $('areas').innerHTML = areas.map(function (a) {
+      return '<div class="area"><div><span style="font-weight:600">' + a[0] + '</span><span>' + a[1] + (a[1] === 1 ? ' restaurant' : ' restaurants') + '</span></div><div class="t"><i style="width:' + Math.round(a[1] / 6 * 100) + '%"></i></div></div>';
+    }).join('') + '<div class="unexplored"><b>Not yet explored · +30 pts each</b><div class="chips">' + newAreas.map(function (n) { return '<span>' + n + '</span>'; }).join('') + '</div></div>';
+    $('challenges').innerHTML = challenges.map(function (h) {
+      return '<button type="button" class="card chal" data-go="dishes"><img src="' + h.img + '" alt=""><div><b>' + esc(h.title) + '</b><small>' + esc(h.sub) + '</small></div><span class="chip-lime">+' + h.pts + '</span></button>';
+    }).join('');
+  }
+
+  $('j-tiles').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-i]');
+    if (b) { sel = +b.dataset.i; renderLevels(); }
+  });
+  $('challenges').addEventListener('click', function (e) {
+    if (e.target.closest('[data-go]')) { location.hash = ''; }
+  });
+  $('info-btn').addEventListener('click', function () { $('sheet').hidden = false; $('sheet-close').focus(); });
+  $('sheet-close').addEventListener('click', function () { $('sheet').hidden = true; });
+  $('sheet').addEventListener('click', function (e) { if (e.target === $('sheet')) $('sheet').hidden = true; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('sheet').hidden = true; });
+  $('share').addEventListener('click', function () {
+    var done = function () { $('share-label').textContent = 'Copied: 640 pts · Explorer'; setTimeout(function () { $('share-label').textContent = 'Share My Foodie Card'; }, 2200); };
+    try { navigator.clipboard.writeText('I\'m a Level 2 Explorer on qlub+ with 640 Foodie Points.').then(done, done); } catch (err) { done(); }
+  });
+  $('score-back').addEventListener('click', function () { location.hash = ''; });
+
+  // Router: #foodie-score shows the score view, anything else shows Saved
+  function route() {
+    var onScore = location.hash === '#foodie-score';
+    $('view-saved').hidden = onScore;
+    $('view-score').hidden = !onScore;
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+  renderStatic(); renderLevels(); route();
+})();
+</script>
+
