@@ -207,7 +207,7 @@ function sheetHtml(){
     const items=S.saved.map(byId);
     inner=`<div class="eyebrow">${I.spark()}YOUR CRAVINGS</div><h3>${items.length?items.length+(items.length>1?' saved dishes':' saved dish'):'Nothing saved yet'}</h3>
     <div class="body">${items.length?items.map(d=>`<div class="item"><img src="${d.img}" alt=""><div><div class="n">${d.dish}</div><div class="s">${d.restaurant} · ${d.price} · ${d.offer}</div></div></div>`).join(''):'<p class="sub" style="margin:0">Swipe right on a dish to save it here.</p>'}</div>
-    <div class="foot"><button class="ghost" type="button" data-a="sheet-close" style="height:48px">Close</button>${items.length?'<button class="solid" type="button" data-a="visit">Plan a Visit</button>':''}</div>`;
+    <div class="foot"><button class="ghost" type="button" data-a="sheet-close" style="height:48px">Close</button>${items.length?'<button class="solid" type="button" data-a="visit">See full list</button>':''}</div>`;
   }else if(sh.type==='venue'){
     const d=byId(sh.id);
     inner=`<div class="eyebrow">${I.spark()}RESTAURANT</div><h3>${d.restaurant}</h3><div class="sub">${d.meta.replace('· ','')} · ★ ${d.rating}</div>
@@ -260,7 +260,7 @@ function render(){
   const done=empty?`<div class="empty"><div class="eyebrow">TODAY'S PICKS · DONE</div><div class="t">You're All Caught Up</div>
   <div class="d">${n===0?'Nothing saved this round.':n===1?'You saved 1 dish.':'You saved '+n+' dishes.'} New picks land tomorrow, tuned to what you saved.</div>
   <div class="list">${items.map(d=>`<button class="item" type="button" data-a="venue" data-id="${d.id}"><img src="${d.img}" alt=""><div><div class="n">${d.dish}</div><div class="s">${d.restaurant} · ${d.offer}</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>`).join('')}</div>
-  <div class="btns"><button class="ghost" type="button" data-a="restart">Start Over</button><button class="solid" type="button" data-a="visit">Plan a Visit</button></div></div>`:'';
+  <div class="btns"><button class="ghost" type="button" data-a="restart">Start Over</button><button class="solid" type="button" data-a="visit">See full list</button></div></div>`:'';
   $('#sec').innerHTML=`<div class="head"><div><div class="eyebrow">${I.spark()}PICKED FOR YOUR TASTE</div><h2>Dishes You'll Love</h2></div>
   <button class="saved-btn" type="button" data-a="saved" aria-label="Your Cravings, ${n} saved">${n?`<span class="thumbs">${items.slice(-3).map(d=>`<img src="${d.img}" alt="">`).join('')}</span>`:`<span class="heart-dot">${I.heart}</span>`}${n} Saved</button></div>
   <p class="sub">Refreshed daily from your visits and saves.</p><div class="segs" aria-label="${empty?'All '+DISHES.length+' reviewed':(S.idx+1)+' of '+DISHES.length}">${segs}</div>
