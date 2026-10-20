@@ -96,6 +96,14 @@
   .unsave:hover { background: rgba(255,138,128,0.12); }
   .dish-meta { font-size: 12px; color: rgba(255,255,255,0.68); }
   .dish-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .tried-wrap { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .rate { display: flex; align-items: center; gap: 0; margin-left: -4px; }
+  .star { width: 26px; height: 26px; padding: 0; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .star svg { width: 18px; height: 18px; fill: none; stroke: rgba(255,255,255,0.45); stroke-width: 1.8; stroke-linejoin: round; transition: transform .12s; }
+  .star.on svg { fill: #fff; stroke: #fff; }
+  .star:hover svg { transform: scale(1.15); }
+  .rate-label { margin-left: 6px; font-size: 12px; color: var(--ink-3); white-space: nowrap; }
+  .dish.is-tried .dish-foot { align-items: flex-end; }
   .tried-line { font-size: 12px; font-weight: 600; color: var(--lime); }
   .pts { height: 26px; padding: 0 9px; border-radius: 999px; background: var(--lime-tint); color: var(--lime); display: flex; align-items: center; font-size: 12px; font-weight: 700; flex: none; }
   .offer { font-size: 12px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -381,8 +389,8 @@
 (function () {
   // Sample data — replace with API: savedDishes[{ id, img, dish, restaurant, area, tried, triedAt, pts, offer, unlocks }]
   var dishes = [
-    { id: 'shortrib', img: '{{IMG:dish-shortrib}}', dish: 'Smoked Short Rib', restaurant: '11 Woodfire', area: 'Jumeirah', tried: true, when: '12 Oct', pts: 10, offer: '' },
-    { id: 'sliders', img: '{{IMG:dish-sliders}}', dish: 'Wagyu Sliders', restaurant: '11 Woodfire', area: 'Jumeirah', tried: true, when: '12 Oct', pts: 10, offer: '' },
+    { id: 'shortrib', img: '{{IMG:dish-shortrib}}', dish: 'Smoked Short Rib', restaurant: '11 Woodfire', area: 'Jumeirah', tried: true, when: '12 Oct', pts: 10, offer: '', rating: 4 },
+    { id: 'sliders', img: '{{IMG:dish-sliders}}', dish: 'Wagyu Sliders', restaurant: '11 Woodfire', area: 'Jumeirah', tried: true, when: '12 Oct', pts: 10, offer: '', rating: 0 },
     { id: 'poke', img: '{{IMG:dish-poke}}', dish: 'Salmon Poke Bowl', restaurant: 'Asian5', area: 'Dubai Mall', tried: false, pts: 40, offer: 'New cuisine · bank offer', unlocks: 'Asian' },
     { id: 'pasta', img: '{{IMG:dish-pasta}}', dish: 'Tagliatelle al Burro', restaurant: 'Birdies', area: 'Business Bay', tried: false, pts: 10, offer: '20% off · Early bird' }
   ];
@@ -394,6 +402,15 @@
 
   var CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D0A10" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
   var HEART = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#FF8A80" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg>';
+
+  var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>';
+  function stars(d) {
+    var out = '<div class="rate" role="radiogroup" aria-label="Rate ' + esc(d.dish) + '">';
+    for (var i = 1; i <= 5; i++) {
+      out += '<button type="button" class="star' + (i <= d.rating ? ' on' : '') + '" role="radio" aria-checked="' + (i === d.rating) + '" data-rate="' + i + '" data-id="' + d.id + '" aria-label="' + i + (i === 1 ? ' star' : ' stars') + '">' + STAR + '</button>';
+    }
+    return out + '<span class="rate-label">' + (d.rating ? d.rating + ' of 5' : 'Rate it') + '</span></div>';
+  }
 
   function render() {
     var tried = dishes.filter(function (d) { return d.tried; });
@@ -433,7 +450,7 @@
     var list = state.filter === 'all' ? todo.concat(tried) : state.filter === 'tried' ? tried : todo;
     $('dishes').innerHTML = list.length ? list.map(function (d) {
       var foot = d.tried
-        ? '<span class="tried-line">Tried ' + esc(d.when) + ' · +' + d.pts + ' earned</span>'
+        ? '<div class="tried-wrap"><span class="tried-line">Tried ' + esc(d.when) + ' · +' + d.pts + ' earned</span>' + stars(d) + '</div>'
         : '<span class="pts">+' + d.pts + ' pts</span><span class="offer">' + esc(d.offer) + '</span>';
       return '<article class="dish card' + (d.tried ? ' is-tried' : '') + '" data-id="' + d.id + '">' +
         '<div class="thumb"><img src="' + d.img + '" alt="' + esc(d.dish) + '">' + (d.tried ? '<span class="check">' + CHECK + '</span>' : '') + '</div>' +
@@ -447,8 +464,9 @@
       (dishes.length ? (state.filter === 'todo' ? 'Swipe right on more dishes to keep earning.' : 'Pay a bill with qlub and tried dishes show up here.') : 'Swipe right on dishes you want to try.') + '</div>';
   }
 
-  function showToast(text) {
+  function showToast(text, noUndo) {
     $('toast-text').textContent = text;
+    $('undo').hidden = !!noUndo;
     $('toast').classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { $('toast').classList.remove('show'); lastRemoved = null; }, 4000);
@@ -461,6 +479,15 @@
     if (b) { state.filter = b.dataset.filter; render(); }
   });
   $('dishes').addEventListener('click', function (e) {
+    var st = e.target.closest('[data-rate]');
+    if (st) {
+      var dd = dishes.filter(function (x) { return x.id === st.dataset.id; })[0];
+      var n = +st.dataset.rate;
+      dd.rating = dd.rating === n ? 0 : n;
+      render();
+      showToast(dd.rating ? 'Rated ' + dd.dish + ' ' + dd.rating + ' of 5' : 'Rating cleared for ' + dd.dish, true);
+      return;
+    }
     var b = e.target.closest('[data-unsave]');
     if (!b) return;
     var id = b.dataset.unsave;
